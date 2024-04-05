@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Recipes</title>
+</head>
+<body>
+    <h1>All Recipes</h1>
+    <ul>
+        {% for recipe in recipes %}
+            <li>
+                <a href="{{ url_for('recipe_details', recipe_id=recipe[0]) }}">{{ recipe[1] }}</a>
+                by <a href="{{ url_for('user_profile', username=recipe[5]) }}">{{ recipe[5] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <p><a href="{{ url_for('index') }}">Back to Main Page</a></p>
+    <p><a href="{{ url_for('profile') }}">Back to Your Profile</a></p>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>

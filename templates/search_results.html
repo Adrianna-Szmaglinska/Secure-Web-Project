@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <p>Search results for: {{ search_query }}</p>
+
+    {% if search_results %}
+        <ul>
+            {% for result in search_results %}
+                <li>
+                    {% if result.username %}
+                        <a href="{{ url_for('user_profile', username=result.username) }}">{{ result.username }}</a>
+                    {% else %}
+                        {{ result }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('index') }}">Back to Home</a> {% if current_user.is_authenticated %}or <a href="{{ url_for('profile', username=current_user.username) }}">Back to Your Profile</a>{% endif %}</p>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>
+
+

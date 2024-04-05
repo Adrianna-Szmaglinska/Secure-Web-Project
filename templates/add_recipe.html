@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <h1>Add Recipe</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li class="flash-{{ message[1] }}">{{ message[0] }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('add_recipe_action') }}" method="post">
+        <label for="title">Title:</label>
+        <input type="text" name="title" required>
+        <br>
+        <br>
+        <label for="ingredients">Ingredients:</label>
+        <textarea name="ingredients" required></textarea>
+        <br>
+        <br>
+        <label for="method">Method:</label>
+        <textarea name="method" required></textarea>
+        <br>
+        <br>
+        <label for="type">Type:</label>
+        <select name="type" required>
+            <option value="Main">Main Course</option>
+            <option value="Side">Side Dish</option>
+            <option value="Appetizer">Appetizer</option>
+            <option value="Dessert">Dessert</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit">Add Recipe</button>
+    </form>
+
+    <p><a href="{{ url_for('profile') }}">Back to Your Profile</a></p>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>

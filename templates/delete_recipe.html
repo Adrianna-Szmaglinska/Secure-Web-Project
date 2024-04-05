@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Recipe</title>
+</head>
+<body>
+    <h1>Delete Recipe</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li class="flash-{{ message[1] }}">{{ message[0] }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <p>Are you sure you want to delete the recipe "{{ recipe.title }}"?</p>
+    <form action="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" method="post">
+        <button type="submit">Yes, Delete</button>
+    </form>
+
+    <p><a href="{{ url_for('profile') }}">Cancel and go back to Profile</a></p>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>

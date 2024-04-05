@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        
+<h1>Dynamic User: {{ username }}</h1>
+
+{% if current_user.is_authenticated and current_user.username == username %}
+    <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
+    <br><br>
+{% endif %}
+
+<table>
+    <tr>
+        <th>First Name</th>
+        <td>{{ fname }}</td>
+    </tr>
+
+    </tr>
+    <tr>
+        <th>Family Name</th>
+        <td>{{ lname }}</td>
+    </tr>
+    {% if current_user.is_authenticated %}
+        {% if current_user.username == username %}
+            <tr>
+                <th>Email</th>
+                <td>{{ email }}</td>
+            </tr>
+        {% endif %}
+    {% endif %}
+    <tr>
+        <th>Gender</th>
+        <td>
+            {%if gender=='Male' -%}
+                <img src="{{url_for('static', filename='iconMale.jpeg')}}" width="50" height="50"/>
+            {%else -%}
+                <img src="{{url_for('static', filename='iconFemale.jpeg')}}" width="50" height="50"/>
+            {%endif%}
+
+        </td>
+    </tr>
+    <tr>
+        <th>Bio</th>
+        <td>
+            {{ bio }}
+        </td>
+    </tr>
+</table>
+<br>
+
+   <h2>User Recipes</h2>
+    {% if current_user.is_authenticated and current_user.username == username %}
+        <p><a href="{{ url_for('add_recipe') }}">Add New Recipe</a></p>
+    {% endif %}
+    <ul>
+    {% for recipe in user_recipes %}
+        <li>
+            <a href="{{ url_for('recipe_details', recipe_id=recipe[0]) }}"><b>{{ recipe[1] }}</b></a>
+            {% if current_user.is_authenticated and current_user.username == username %}
+                <a href="{{ url_for('edit_recipe', recipe_id=recipe[0]) }}"><em>Edit Recipe</em></a>
+                <a href="{{ url_for('delete_recipe', recipe_id=recipe[0]) }}"><em>Delete Recipe</em></a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+<br>
+        <p><a href="{{ url_for('all_recipes') }}">View All Recipes</a></p>
+<br>
+    <form action="{{ url_for('search') }}" method="post">
+        <input type="text" name="search_input" placeholder="Search for User">
+        <input type="submit" value="Search">
+    </form>
+<br>
+{% if current_user.is_authenticated and current_user.username != username %}
+    <a href="{{ url_for('user_profile', username=current_user.username) }}">Back to your Profile</a>
+<br>
+<br>
+{% endif %}
+<a href="/logout">Logout</a>
+</body>
+</html>

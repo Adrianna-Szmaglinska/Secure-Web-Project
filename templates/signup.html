@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li class="flash-{{ category }}">{{ message | safe }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('signupAction') }}" method="post">
+        <label for="username">Username:</label> <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label> <input type="password" id="password" name="password"><br>
+
+        <label for="email">Email:</label> <input type="text" id="email" name="email"><br>
+        <label for="fname">First Name:</label> <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Last Name:</label> <input type="text" id="lname" name="lname"><br>
+
+        Select your gender (you can only select one value):<br>
+        <input type="radio" id="male" name="gender" value="Male" checked="checked">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br>
+
+        <label for="bio">Something about you:</label><br>
+        <textarea id="bio" name="bio" rows="5" cols="33">I was backpacking through western Europe ...
+        </textarea>
+
+        <br>
+        <br>
+
+        <input type="submit" value="Sign Up">
+
+        <br>
+
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Log In</a></p>
+</body>
+</html>
